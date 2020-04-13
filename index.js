@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { getQR, awaitLogin } = require('./login');
 const { searchVersion, getExperienceVersion, setExperienceVersion, deleteExperienceVersion, submitVersion } = require('./version');
 const argv = process.argv.slice(2);
