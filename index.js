@@ -1,5 +1,5 @@
 const { getQR, awaitLogin } = require('./login');
-const { searchVersion, getExperienceVersion, setExperienceVersion, submitVersion } = require('./version');
+const { searchVersion, getExperienceVersion, setExperienceVersion, deleteExperienceVersion, submitVersion } = require('./version');
 const argv = process.argv.slice(2);
 
 const usage = (length, usage) => {
@@ -32,6 +32,10 @@ const usage = (length, usage) => {
     if (argv[0] === 'set-exp') {
         usage(2, 'set-exp <version-id>');
         setExperienceVersion(argv[1]);
+    }
+    
+    if (argv[0] === 'del-exp') {
+        deleteExperienceVersion();
     }
     
     if (argv[0] === 'submit') {

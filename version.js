@@ -61,7 +61,7 @@ const getExperienceVersion = async () => {
         .filter(k => k.is_exper)[0] || {})['basic_info'];
 };
 
-const setExperienceVersion = async (versionId) => {
+const deleteExperienceVersion = async () => {
     const token = await getSessionToken();
     if (!token) {
         throw Error('登录态失效');
@@ -71,7 +71,7 @@ const setExperienceVersion = async (versionId) => {
 
     if (expVersion) {
         // 清除已有的体验版
-        await api.post('/wxamp/cgi/route?' + qs.stringify({
+        resp(await api.post('/wxamp/cgi/route?' + qs.stringify({
             path: encodeURIComponent('/wxopen/wadevelopcode?action=delete_exper'),
             token,
             lang: 'zh_CN',
@@ -79,25 +79,33 @@ const setExperienceVersion = async (versionId) => {
         }), {
             openid: expVersion.open_id,
             version: expVersion.version,
-        });
+        }));
     }
+}
+
+const setExperienceVersion = async (versionId) => {
+    const token = await getSessionToken();
+    if (!token) {
+        throw Error('登录态失效');
+    }
+
+    await deleteExperienceVersion();
 
     // 根据 openid 找到语义化版本号
     const { version } = await searchVersion(versionId, 'open_id');
 
     // 设置体验版
-    const res = await api.post('/wxamp/cgi/route?' + qs.stringify({
-        path: encodeURIComponent('/wxopen/wadevelopcode?action=sumit_exper'),
-        token,
-        lang: 'zh_CN',
-        random: Math.random()
-    }), {
-        openid: versionId,
-        version
-    });
-
-    if (res.data.ret !== 0) {
-        console.log(res.data);
+    try {
+        resp(await api.post('/wxamp/cgi/route?' + qs.stringify({
+            path: encodeURIComponent('/wxopen/wadevelopcode?action=sumit_exper'),
+            token,
+            lang: 'zh_CN',
+            random: Math.random()
+        }), {
+            openid: versionId,
+            version
+        }));
+    } catch (e) {
         throw Error('设置体验版失败');
     }
 };
@@ -109,30 +117,30 @@ const submitVersion = async (versionId, desc) => {
     }
 
     // 提交审核
-    const res = await api.post('/wxamp/cgi/route?' + qs.stringify({
-        path: encodeURIComponent('/wxopen/wadevelopcode?action=submit_check'),
-        token,
-        lang: 'zh_CN',
-        random: Math.random()
-    }), {
-        ticket: 'qrcheckTicket',
-        openid: versionId,
-        auto_id: 30,
-        version_desc: desc,
-        speedup_audit: 0,
-        speedup_type: '其他',
-        speedup_desc: '',
-        encrypted_username: '',
-        encrypted_password: '',
-        remark: '',
-        feedback_info: '',
-        feedback_status: 1,
-        preview_info: '{"pic_id_list":[],"video_id_list":[]}',
-        feedback_stuff: '',
-    });
-
-    if (res.data.ret !== 0) {
-        throw Error('提交审核失败');
+    try {
+        resp(await api.post('/wxamp/cgi/route?' + qs.stringify({
+            path: encodeURIComponent('/wxopen/wadevelopcode?action=submit_check'),
+            token,
+            lang: 'zh_CN',
+            random: Math.random()
+        }), {
+            ticket: 'qrcheckTicket',
+            openid: versionId,
+            auto_id: 30,
+            version_desc: desc,
+            speedup_audit: 0,
+            speedup_type: '其他',
+            speedup_desc: '',
+            encrypted_username: '',
+            encrypted_password: '',
+            remark: '',
+            feedback_info: '',
+            feedback_status: 1,
+            preview_info: '{"pic_id_list":[],"video_id_list":[]}',
+            feedback_stuff: '',
+        }));
+    } catch (e) {
+        throw Error('设置体验版失败');
     }
 };
 
@@ -140,5 +148,6 @@ module.exports = {
     searchVersion,
     getExperienceVersion,
     setExperienceVersion,
+    deleteExperienceVersion,
     submitVersion,
 };
