@@ -1,0 +1,23 @@
+{
+  "name": "miniprogram-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "mpman": "index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^0.19.2",
+    "axios-cookiejar-support": "^1.0.0",
+    "cheerio": "^1.0.0-rc.3",
+    "file-cookie-store": "^0.2.1",
+    "tough-cookie": "^4.0.0",
+    "yargs": "^15.3.1"
+  }
+}
