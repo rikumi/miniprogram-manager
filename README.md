@@ -2,6 +2,12 @@
 
 微信小程序版本管理自动工具
 
+## 安装
+
+```bash
+npm i -g miniprogram-manager
+```
+
 ## 功能
 
 - 根据版本备注精确查找开发版 ID
