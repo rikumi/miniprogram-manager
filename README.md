@@ -22,3 +22,4 @@
 - `mpman set-exp <version-id>`: 设置体验版
 - `mpman del-exp`: 删除当前体验版
 - `mpman submit <version-id> <description>`: 提交审核
+- `mpman logout`: 退出当前登录

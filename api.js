@@ -52,6 +52,7 @@ const getCookie = (key) => {
 
 module.exports = {
     api,
+    jsonPath,
     getCookie,
     cookieJar,
 };

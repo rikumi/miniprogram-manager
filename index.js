@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { getQR, awaitLogin } = require('./login');
+const { getQR, awaitLogin, logout } = require('./login');
 const { searchVersion, getExperienceVersion, setExperienceVersion, deleteExperienceVersion, submitVersion } = require('./version');
 const argv = process.argv.slice(2);
 
@@ -18,6 +18,10 @@ const usage = (length, usage) => {
     
     if (argv[0] === 'await-login') {
         awaitLogin();
+    }
+    
+    if (argv[0] === 'logout') {
+        logout();
     }
     
     if (argv[0] === 'search-version') {

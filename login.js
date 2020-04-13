@@ -5,7 +5,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 const qs = require('querystring');
 const { resp } = require('./resp');
-const { api, cookieJar } = require('./api');
+const { api, jsonPath, cookieJar } = require('./api');
 const { MemoryCookieStore } = require('tough-cookie');
 const sleep = t => new Promise(r => setTimeout(r, t));
 
@@ -78,8 +78,15 @@ const awaitLogin = async () => {
     await api.post('/cgi-bin/bizlogin?action=login');
 }
 
+const logout = () => {
+    try {
+        fs.unlinkSync(jsonPath);
+    } catch (e) {}
+}
+
 module.exports = {
     getQR,
     getSessionToken,
     awaitLogin,
+    logout,
 };
