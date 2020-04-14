@@ -1,0 +1,4 @@
+#!/bin/bash
+entry="$(dirname "$(dirname "$(readlink -f "$0")")")/index.js"
+
+node $entry $@
