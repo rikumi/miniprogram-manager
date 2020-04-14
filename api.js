@@ -33,10 +33,10 @@ const api = axios.create({
         'content-type': 'application/x-www-form-urlencoded',
         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.92 Safari/537.36',
     },
-    proxy: {
-        host: '127.0.0.1',
-        port: 8899
-    },
+    // proxy: {
+    //     host: '127.0.0.1',
+    //     port: 8899
+    // },
     withCredentials: true,
     transformRequest: (req) => {
         if (typeof req === 'object') {
