@@ -25,13 +25,16 @@ const usage = (length, usage) => {
     }
     
     if (argv[0] === 'search-version') {
-        usage(2, `search-version <version-desc> [search-field]
-            search-field: default "describe"`);
-        console.log((await searchVersion(...argv.slice(1))).open_id);
+        usage(2, `search-version <version-desc> [search-field] [grep-field]
+            search-field: default "describe"
+              grep-field: default "open_id"`);
+        console.log((await searchVersion(...argv.slice(1)))[argv[3] || 'open_id']);
     }
     
     if (argv[0] === 'get-exp') {
-        console.log((await getExperienceVersion()).open_id);
+        usage(1, `get-exp [grep-field]
+            grep-field: default "open_id"`);
+        console.log((await getExperienceVersion())[argv[1] || 'open_id']);
     }
     
     if (argv[0] === 'set-exp') {
